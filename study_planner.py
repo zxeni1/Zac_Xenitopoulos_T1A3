@@ -8,3 +8,7 @@ def load_data():
     except FileNotFoundError:
         data = {"classes": [], "assignments": [], "exams": []}
     return data
+
+def save_data(data):
+    with open("study_planner.json", "w") as file:
+        json.dump(data, file, indent=2)
