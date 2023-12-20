@@ -28,3 +28,7 @@ def add_task(data, task_type):
     data[task_type].append(task)
     save_data(data)
     print("{} added successfully!".format(task_type.capitalize()))
+
+def edit_task(data, task_type):
+    print("List of {}: {}".format(task_type, [task["name"] for task in data[task_type]]))
+    task_name = input("Enter the name of the {} to edit: ".format(task_type))
