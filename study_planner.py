@@ -22,3 +22,9 @@ def add_task(data, task_type):
     except ValueError:
         print("Invalid date format. Please enter the date in DD/MM/YYYY format.")
         return
+    
+    task = {"name": name, "due_date": due_date.strftime("%d/%m/%Y")}
+
+    data[task_type].append(task)
+    save_data(data)
+    print("{} added successfully!".format(task_type.capitalize()))
