@@ -12,3 +12,13 @@ def load_data():
 def save_data(data):
     with open("study_planner.json", "w") as file:
         json.dump(data, file, indent=2)
+
+def add_task(data, task_type):
+    name = input("Enter the name of the {}: ".format(task_type))
+    due_date_str = input("Enter the due date (DD/MM/YYYY): ")
+    
+    try:
+        due_date = datetime.strptime(due_date_str, "%d/%m/%Y")
+    except ValueError:
+        print("Invalid date format. Please enter the date in DD/MM/YYYY format.")
+        return
