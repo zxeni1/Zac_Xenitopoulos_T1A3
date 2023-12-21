@@ -19,15 +19,17 @@ def save_data(data):
 def get_user_input(prompt):
     return input(prompt)
 
+def get_valid_date_input(prompt):
+    while True:
+        date_str = get_user_input(prompt)
+        try:
+            return datetime.strptime(date_str, "%d/%m/%Y")
+        except ValueError:
+            print("Sorry! Please enter the date as DD/MM/YYYY. Try again.")
+
 def add_task(data, task_type):
     name = get_user_input("Enter the name of the {}: ".format(task_type))
-    due_date_str = get_user_input("Enter the due date (DD/MM/YYYY): ")
-
-    try:
-        due_date = datetime.strptime(due_date_str, "%d/%m/%Y")
-    except ValueError:
-        print("Invalid date format. Please enter the date in DD/MM/YYYY format.")
-        return
+    due_date = get_valid_date_input("Enter the due date (DD/MM/YYYY): ")
 
     task = {"name": name, "due_date": due_date.strftime("%d/%m/%Y")}
     data[task_type].append(task)
