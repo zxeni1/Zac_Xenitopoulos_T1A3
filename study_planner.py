@@ -19,11 +19,19 @@ def save_data(data):
 def get_user_input(prompt):
     return input(prompt)
 
+def is_past_date(date):
+    today = datetime.today().date()
+    return date < today
+
 def get_valid_date_input(prompt):
     while True:
         date_str = get_user_input(prompt)
         try:
-            return datetime.strptime(date_str, "%d/%m/%Y")
+            date = datetime.strptime(date_str, "%d/%m/%Y")
+            if is_past_date(date):
+                print("I knew you would check this ;) Please enter a future date.")
+                continue
+            return date
         except ValueError:
             print("Sorry! Please enter the date as DD/MM/YYYY. Try again.")
 
