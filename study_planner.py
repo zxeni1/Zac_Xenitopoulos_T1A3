@@ -54,8 +54,8 @@ def edit_task(data, task_type):
                 except ValueError:
                     print("Invalid date format. Please enter the date in DD/MM/YYYY format.")
                     return
-            
-             save_data(data)
+
+            save_data(data)  # Fix: Adjusted the indentation of this line
             print("{} edited successfully!".format(task_type.capitalize()))
             return
 
@@ -103,7 +103,7 @@ def check_exam_assignment_reminders(data):
             if today < due_date:
                 upcoming_tasks.append((task["name"], due_date, task_type))
     
-     if upcoming_tasks:
+    if upcoming_tasks:
         print("\nUpcoming {}:".format("Exams and Assignments"))
         for task_name, due_date, task_type in sorted(upcoming_tasks, key=lambda x: x[1]):
             print("{} ({}) - Due on {}".format(task_name, task_type.capitalize(), due_date))
@@ -116,3 +116,4 @@ def check_all_tasks(data):
         print("\n{}:".format(task_type.capitalize()))
         for task in data[task_type]:
             print("{} - Due on {}".format(task["name"], task["due_date"]))
+
