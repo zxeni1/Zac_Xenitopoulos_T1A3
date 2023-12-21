@@ -71,3 +71,19 @@ def delete_task(data, task_type):
 
     print("{} not found!".format(task_type.capitalize()))
 
+# Function to check reminders for classes
+def check_class_reminders(data):
+    today = datetime.today().date()
+    upcoming_classes = []
+
+    for task in data["classes"]:
+        due_date = datetime.strptime(task["due_date"], "%d/%m/%Y").date()
+        if today < due_date:
+            upcoming_classes.append((task["name"], due_date))
+
+    if upcoming_classes:
+        print("\nUpcoming Classes:")
+        for class_name, due_date in sorted(upcoming_classes, key=lambda x: x[1]):
+            print("{} - On {}".format(class_name, due_date))
+    else:
+        print("\nNo upcoming classes!")
