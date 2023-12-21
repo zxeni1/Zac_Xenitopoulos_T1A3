@@ -32,3 +32,8 @@ def add_task(data, task_type):
 def edit_task(data, task_type):
     print("List of {}: {}".format(task_type, [task["name"] for task in data[task_type]]))
     task_name = input("Enter the name of the {} to edit: ".format(task_type))
+
+    for task in data[task_type]:
+        if task["name"] == task_name:
+            new_name = input("Enter the new name (press Enter to keep the same): ")
+            new_due_date_str = input("Enter the new due date (DD/MM/YYYY) (press Enter to keep the same): ")
