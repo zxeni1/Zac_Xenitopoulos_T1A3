@@ -100,3 +100,10 @@ def check_exam_assignment_reminders(data):
             due_date = datetime.strptime(task["due_date"], "%d/%m/%Y").date()
             if today < due_date:
                 upcoming_tasks.append((task["name"], due_date, task_type))
+    
+     if upcoming_tasks:
+        print("\nUpcoming {}:".format("Exams and Assignments"))
+        for task_name, due_date, task_type in sorted(upcoming_tasks, key=lambda x: x[1]):
+            print("{} ({}) - Due on {}".format(task_name, task_type.capitalize(), due_date))
+    else:
+        print("\nNo upcoming exams or assignments!")
