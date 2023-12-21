@@ -1,3 +1,4 @@
+# Function to load data from JSON file
 import json
 from datetime import datetime, timedelta
 
@@ -9,10 +10,12 @@ def load_data():
         data = {"classes": [], "assignments": [], "exams": []}
     return data
 
+#  Function to save data to JSON file 
 def save_data(data):
     with open("study_planner.json", "w") as file:
         json.dump(data, file, indent=2)
 
+#function to add a new task such as class, assignment or exam
 def add_task(data, task_type):
     name = input("Enter the name of the {}: ".format(task_type))
     due_date_str = input("Enter the due date (DD/MM/YYYY): ")
@@ -29,6 +32,7 @@ def add_task(data, task_type):
     save_data(data)
     print("{} added successfully!".format(task_type.capitalize()))
 
+# Function to edit a task such as class, assignment or exam
 def edit_task(data, task_type):
     print("List of {}: {}".format(task_type, [task["name"] for task in data[task_type]]))
     task_name = input("Enter the name of the {} to edit: ".format(task_type))
@@ -46,3 +50,11 @@ def edit_task(data, task_type):
                 except ValueError:
                     print("Invalid date format. Please enter the date in DD/MM/YYYY format.")
                     return
+            
+             save_data(data)
+            print("{} edited successfully!".format(task_type.capitalize()))
+            return
+
+    print("{} not found!".format(task_type.capitalize()))
+
+# Function to delete a task such as class, assignment or exam
