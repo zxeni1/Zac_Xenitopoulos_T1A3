@@ -58,3 +58,16 @@ def edit_task(data, task_type):
     print("{} not found!".format(task_type.capitalize()))
 
 # Function to delete a task such as class, assignment or exam
+def delete_task(data, task_type):
+    print("List of {}: {}".format(task_type, [task["name"] for task in data[task_type]]))
+    task_name = input("Enter the name of the {} to delete: ".format(task_type))
+
+    for task in data[task_type]:
+        if task["name"] == task_name:
+            data[task_type].remove(task)
+            save_data(data)
+            print("{} deleted successfully!".format(task_type.capitalize()))
+            return
+
+    print("{} not found!".format(task_type.capitalize()))
+
