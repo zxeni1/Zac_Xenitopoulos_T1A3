@@ -16,18 +16,20 @@ def save_data(data):
         json.dump(data, file, indent=2)
 
 #function to add a new task such as class, assignment or exam
+def get_user_input(prompt):
+    return input(prompt)
+
 def add_task(data, task_type):
-    name = input("Enter the name of the {}: ".format(task_type))
-    due_date_str = input("Enter the due date (DD/MM/YYYY): ")
-    
+    name = get_user_input("Enter the name of the {}: ".format(task_type))
+    due_date_str = get_user_input("Enter the due date (DD/MM/YYYY): ")
+
     try:
         due_date = datetime.strptime(due_date_str, "%d/%m/%Y")
     except ValueError:
         print("Invalid date format. Please enter the date in DD/MM/YYYY format.")
         return
-    
-    task = {"name": name, "due_date": due_date.strftime("%d/%m/%Y")}
 
+    task = {"name": name, "due_date": due_date.strftime("%d/%m/%Y")}
     data[task_type].append(task)
     save_data(data)
     print("{} added successfully!".format(task_type.capitalize()))
