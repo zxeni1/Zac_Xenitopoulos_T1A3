@@ -89,3 +89,14 @@ def check_class_reminders(data):
             print("{} - On {}".format(class_name, due_date))
     else:
         print("\nNo upcoming classes!")
+
+# Function to check reminders for assignments and exams
+def check_exam_assignment_reminders(data):
+    today = datetime.today().date()
+    upcoming_tasks = []
+
+    for task_type in ["assignments", "exams"]:
+        for task in data[task_type]:
+            due_date = datetime.strptime(task["due_date"], "%d/%m/%Y").date()
+            if today < due_date:
+                upcoming_tasks.append((task["name"], due_date, task_type))
