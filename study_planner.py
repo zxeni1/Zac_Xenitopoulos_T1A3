@@ -19,19 +19,11 @@ def save_data(data):
 def get_user_input(prompt):
     return input(prompt)
 
-def is_past_date(date):
-    today = datetime.today().date()
-    return date < today
-
 def get_valid_date_input(prompt):
     while True:
         date_str = get_user_input(prompt)
         try:
-            date = datetime.strptime(date_str, "%d/%m/%Y")
-            if is_past_date(date):
-                print("I knew you would check this ;) Please enter a future date.")
-                continue
-            return date
+            return datetime.strptime(date_str, "%d/%m/%Y")
         except ValueError:
             print("Sorry! Please enter the date as DD/MM/YYYY. Try again.")
 
@@ -43,6 +35,7 @@ def add_task(data, task_type):
     data[task_type].append(task)
     save_data(data)
     print("{} added successfully!".format(task_type.capitalize()))
+
 
 # Function to edit a task such as class, assignment or exam
 def edit_task(data, task_type):
@@ -125,3 +118,55 @@ def check_all_tasks(data):
         for task in data[task_type]:
             print("{} - Due on {}".format(task["name"], task["due_date"]))
 
+def main():
+    data = load_data()
+
+    while True:
+        print("\nStudy Planner Menu:")
+        print("1. Add Class")
+        print("2. Add Assignment")
+        print("3. Add Exam")
+        print("4. Edit Class")
+        print("5. Edit Assignment")
+        print("6. Edit Exam")
+        print("7. Delete Class")
+        print("8. Delete Assignment")
+        print("9. Delete Exam")
+        print("10. Check Class Reminders")
+        print("11. Check Exam and Assignment Reminders")
+        print("12. Check All")
+        print("0. Exit")
+
+        choice = get_user_input("Enter your choice (0-12): ")
+
+        if choice == "0":
+            break
+        elif choice == "1":
+            add_task(data, "classes")
+        elif choice == "2":
+            add_task(data, "assignments")
+        elif choice == "3":
+            add_task(data, "exams")
+        elif choice == "4":
+            edit_task(data, "classes")
+        elif choice == "5":
+            edit_task(data, "assignments")
+        elif choice == "6":
+            edit_task(data, "exams")
+        elif choice == "7":
+            delete_task(data, "classes")
+        elif choice == "8":
+            delete_task(data, "assignments")
+        elif choice == "9":
+            delete_task(data, "exams")
+        elif choice == "10":
+            check_class_reminders(data)
+        elif choice == "11":
+            check_exam_assignment_reminders(data)
+        elif choice == "12":
+            check_all_tasks(data)
+        else:
+            print("Invalid choice. Please enter a number between 0 and 12.")
+
+if __name__ == "__main__":
+    main()
