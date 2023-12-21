@@ -107,3 +107,10 @@ def check_exam_assignment_reminders(data):
             print("{} ({}) - Due on {}".format(task_name, task_type.capitalize(), due_date))
     else:
         print("\nNo upcoming exams or assignments!")
+
+def check_all_tasks(data):
+    print("\nAll Tasks:")
+    for task_type in ["classes", "assignments", "exams"]:
+        print("\n{}:".format(task_type.capitalize()))
+        for task in data[task_type]:
+            print("{} - Due on {}".format(task["name"], task["due_date"]))
