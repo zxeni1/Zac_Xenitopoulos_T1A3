@@ -37,3 +37,12 @@ def edit_task(data, task_type):
         if task["name"] == task_name:
             new_name = input("Enter the new name (press Enter to keep the same): ")
             new_due_date_str = input("Enter the new due date (DD/MM/YYYY) (press Enter to keep the same): ")
+
+            if new_name:
+                task["name"] = new_name
+            if new_due_date_str:
+                try:
+                    task["due_date"] = datetime.strptime(new_due_date_str, "%d/%m/%Y").strftime("%d/%m/%Y")
+                except ValueError:
+                    print("Invalid date format. Please enter the date in DD/MM/YYYY format.")
+                    return
