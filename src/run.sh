@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Change to the src directory
+cd "$(dirname "$0")"
+
 # Check if python3 is installed
 if command -v python3 &>/dev/null; then
     echo "Python 3 is installed."
