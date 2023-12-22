@@ -1,77 +1,64 @@
-# Packages 
+# Packages
 from colored import fg, attr, bg
+import pandas as pd
+from datetime import datetime
 
-# Function to load data from JSON file
-import json
-from datetime import datetime, timedelta
-
+# Function to load data from JSON file using pandas
 def load_data():
     try:
-        with open("study_planner.json", "r") as file:
-            data = json.load(file)
+        data = pd.read_json("study_planner.json")
     except FileNotFoundError:
-        data = {"classes": [], "assignments": [], "exams": []}
+        data = pd.DataFrame(columns=["name", "due_date", "type"])
     return data
 
-#  Function to save data to JSON file 
+# Function to save data to JSON file using pandas
 def save_data(data):
-    with open("study_planner.json", "w") as file:
-        json.dump(data, file, indent=2)
-#function to add a new task such as class, assignment or exam
-def get_user_input(prompt):
-    return input(prompt)
+    data.to_json("study_planner.json", orient="records", date_format="iso", indent=2)
 
-def get_valid_date_input(prompt):
-    while True:
-        date_str = get_user_input(prompt)
-        try:
-            return datetime.strptime(date_str, "%d/%m/%Y")
-        except ValueError:
-            print("Sorry! Please enter the date as DD/MM/YYYY. Try again.")
-
+# Function to add a new task such as class, assignment, or exam
 def add_task(data, task_type):
     name = get_user_input("Enter the name of the {}: ".format(task_type))
     due_date = get_valid_date_input("Enter the due date (DD/MM/YYYY): ")
 
-    task = {"name": name, "due_date": due_date.strftime("%d/%m/%Y")}
-    data[task_type].append(task)
+    task = pd.DataFrame({"name": [name], "due_date": [due_date], "type": [task_type]})
+    data = pd.concat([data, task], ignore_index=True)
     save_data(data)
     print("{} added successfully!".format(task_type.capitalize()))
 
-
-# Function to edit a task such as class, assignment or exam
+# Function to edit a task such as class, assignment, or exam
 def edit_task(data, task_type):
-    print("List of {}: {}".format(task_type, [task["name"] for task in data[task_type]]))
+    print("List of {}: {}".format(task_type, data[data["type"] == task_type]["name"].tolist()))
     task_name = input("Enter the name of the {} to edit: ".format(task_type))
 
-    for task in data[task_type]:
+    for index, task in data[data["type"] == task_type].iterrows():
         if task["name"] == task_name:
             new_name = input("Enter the new name (press Enter to keep the same): ")
             new_due_date_str = input("Enter the new due date (DD/MM/YYYY) (press Enter to keep the same): ")
 
             if new_name:
-                task["name"] = new_name
+                data.at[index, "name"] = new_name
             if new_due_date_str:
                 try:
-                    task["due_date"] = datetime.strptime(new_due_date_str, "%d/%m/%Y").strftime("%d/%m/%Y")
+                    new_due_date = datetime.strptime(new_due_date_str, "%d/%m/%Y")
+                    data.at[index, "due_date"] = new_due_date.strftime("%d/%m/%Y")
                 except ValueError:
                     print("Invalid date format. Please enter the date in DD/MM/YYYY format.")
                     return
 
-            save_data(data)  # Fix: Adjusted the indentation of this line
+            save_data(data)
             print("{} edited successfully!".format(task_type.capitalize()))
             return
 
     print("{} not found!".format(task_type.capitalize()))
 
-# Function to delete a task such as class, assignment or exam
+# Function to delete a task such as class, assignment, or exam
 def delete_task(data, task_type):
-    print("List of {}: {}".format(task_type, [task["name"] for task in data[task_type]]))
+    print("List of {}: {}".format(task_type, data[data["type"] == task_type]["name"].tolist()))
     task_name = input("Enter the name of the {} to delete: ".format(task_type))
 
-    for task in data[task_type]:
+    for index, task in data[data["type"] == task_type].iterrows():
         if task["name"] == task_name:
-            data[task_type].remove(task)
+            data = data.drop(index, axis=0).reset_index(drop=True)
             save_data(data)
             print("{} deleted successfully!".format(task_type.capitalize()))
             return
@@ -81,45 +68,50 @@ def delete_task(data, task_type):
 # Function to check reminders for classes
 def check_class_reminders(data):
     today = datetime.today().date()
-    upcoming_classes = []
+    upcoming_classes = data[(data["type"] == "classes") & (data["due_date"] > today)]
 
-    for task in data["classes"]:
-        due_date = datetime.strptime(task["due_date"], "%d/%m/%Y").date()
-        if today < due_date:
-            upcoming_classes.append((task["name"], due_date))
-
-    if upcoming_classes:
+    if not upcoming_classes.empty:
         print("\nUpcoming Classes:")
-        for class_name, due_date in sorted(upcoming_classes, key=lambda x: x[1]):
-            print("{} - On {}".format(class_name, due_date))
+        for _, task in upcoming_classes.iterrows():
+            print("{} - On {}".format(task["name"], task["due_date"]))
     else:
         print("\nNo upcoming classes!")
 
 # Function to check reminders for assignments and exams
 def check_exam_assignment_reminders(data):
     today = datetime.today().date()
-    upcoming_tasks = []
+    upcoming_tasks = data[(data["type"].isin(["assignments", "exams"])) & (data["due_date"] > today)]
 
-    for task_type in ["assignments", "exams"]:
-        for task in data[task_type]:
-            due_date = datetime.strptime(task["due_date"], "%d/%m/%Y").date()
-            if today < due_date:
-                upcoming_tasks.append((task["name"], due_date, task_type))
-    
-    if upcoming_tasks:
-        print("\nUpcoming {}:".format("Exams and Assignments"))
-        for task_name, due_date, task_type in sorted(upcoming_tasks, key=lambda x: x[1]):
-            print("{} ({}) - Due on {}".format(task_name, task_type.capitalize(), due_date))
+    if not upcoming_tasks.empty:
+        print("\nUpcoming Exams and Assignments:")
+        for _, task in upcoming_tasks.iterrows():
+            print("{} ({}) - Due on {}".format(task["name"], task["type"].capitalize(), task["due_date"]))
     else:
         print("\nNo upcoming exams or assignments!")
 
+# Function to check all tasks
 def check_all_tasks(data):
     print("\nAll Tasks:")
     for task_type in ["classes", "assignments", "exams"]:
+        task_subset = data[data["type"] == task_type]
         print("\n{}:".format(task_type.capitalize()))
-        for task in data[task_type]:
+        for _, task in task_subset.iterrows():
             print("{} - Due on {}".format(task["name"], task["due_date"]))
 
+# Function to get user input
+def get_user_input(prompt):
+    return input(prompt)
+
+# Function to get valid date input
+def get_valid_date_input(prompt):
+    while True:
+        date_str = get_user_input(prompt)
+        try:
+            return datetime.strptime(date_str, "%d/%m/%Y")
+        except ValueError:
+            print("Sorry! Please enter the date as DD/MM/YYYY. Try again.")
+
+# Main function
 def main():
     data = load_data()
 
@@ -172,4 +164,3 @@ def main():
 
 if __name__ == "__main__":
     main()
- 
