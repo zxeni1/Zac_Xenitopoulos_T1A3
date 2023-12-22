@@ -60,8 +60,15 @@ This function looks for all upcoming jobs based on the current date and shows th
 ![alt text for screen readers](/docs/10.jpg)
 ![alt text for screen readers](/docs/1.jpg)
 ![alt text for screen readers](/docs/4.jpg)
+
 ## Q6 Help Document
 
 To view the help document please click on the link below!
 
-### [Click me!](Help.md)
+### [Click me!](./docs/Help.md)
+
+## Test Case
+
+**To view Test Case 1 please click here**
+
+**To view Test Case 2 please click here**
