@@ -1,6 +1,6 @@
 # Zac_Xenitopoulos_T1A3
 
-## Provide full attribution to referenced sources (where applicable).
+## Q1 Provide full attribution to referenced sources (where applicable).
 
 The following modules and libraries are used by the code that is provided:
 
@@ -13,10 +13,10 @@ Extral referencing was used from [Python cheat sheet](https://www.pythoncheatshe
 
 A large variety of different tutorials were also used in the progess of developing my application from [w3schools - python](https://www.w3schools.com/python/). In conjunction with the above mentioned, these resources, libraries and modules helped develope a running application. 
 
-## Provide a link to your source control repository
+## Q2 Provide a link to your source control repository
 ### My Github Repo: [Click Here!!](https://github.com/zxeni1/Zac_Xenitopoulos_T1A3)
 
-## Identify any code style guide or styling conventions that the application will adhere to.
+## Q3 Identify any code style guide or styling conventions that the application will adhere to.
 
 The code adheres to Python's PEP 8 style guide. The code complies with the following elements of the style guide
 
@@ -34,7 +34,7 @@ The code adheres to Python's PEP 8 style guide. The code complies with the follo
 
 It is important that following a particular style guide—like PEP 8—improves the readability and maintainability of code. Additionally, developers may work together more easily on projects when code styles are consistent.
 
-## Develop a list of features that will be included in the application
+## Q4 Develop a list of features that will be included in the application
 
 ### 1. Managing Tasks:
 
@@ -48,6 +48,20 @@ The programme loads and saves data from a *"study_planner.json"* JSON file to gu
 
 This function looks for all upcoming jobs based on the current date and shows them all. The datetime module is used by the programme to get the current date. The due dates of the jobs kept in the DataFrame are then compared to this date. The application prints out task details, including names, types, and due dates, if tasks with future dates are discovered. To handle situations when tasks are imminent or not, conditional control structures are used. In instances when the "due_date" column cannot be located in the DataFrame, error handling is used to handle the issue graciously and notify the user. A thorough grasp is demonstrated by the usage of variables, loops, conditional control structures, and error handling.
 
-## Develop an implementation plan
+## Q5 Develop an implementation plan
 
-## Help Document
+![alt text for screen readers](/docs/2.jpg)
+![alt text for screen readers](/docs/3.jpg)
+![alt text for screen readers](/docs/5.jpg)
+![alt text for screen readers](/docs/6.jpg)
+![alt text for screen readers](/docs/7.jpg)
+![alt text for screen readers](/docs/8.jpg)
+![alt text for screen readers](/docs/9.jpg)
+![alt text for screen readers](/docs/10.jpg)
+![alt text for screen readers](/docs/1.jpg)
+![alt text for screen readers](/docs/4.jpg)
+## Q6 Help Document
+
+To view the help document please click on the link below!
+
+### [Click me!](Help.md)
