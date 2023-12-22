@@ -1,3 +1,6 @@
+# Packages 
+from colored import fg, attr, bg
+
 # Function to load data from JSON file
 import json
 from datetime import datetime, timedelta
@@ -14,7 +17,6 @@ def load_data():
 def save_data(data):
     with open("study_planner.json", "w") as file:
         json.dump(data, file, indent=2)
-
 #function to add a new task such as class, assignment or exam
 def get_user_input(prompt):
     return input(prompt)
@@ -122,8 +124,8 @@ def main():
     data = load_data()
 
     while True:
-        print("\nStudy Planner Menu:")
-        print("1. Add Class")
+        print(f"{fg('white')}{bg('black')}\nStudy Planner Menu{attr('reset')}")
+        print(f"{fg('blue')}{bg('black')}1. Add Class")
         print("2. Add Assignment")
         print("3. Add Exam")
         print("4. Edit Class")
@@ -135,7 +137,7 @@ def main():
         print("10. Check Class Reminders")
         print("11. Check Exam and Assignment Reminders")
         print("12. Check All")
-        print("0. Exit")
+        print(f"{fg('white')}{bg('black')}0. Exit")
 
         choice = get_user_input("Enter your choice (0-12): ")
 
@@ -170,3 +172,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+ 
