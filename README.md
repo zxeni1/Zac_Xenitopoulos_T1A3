@@ -69,6 +69,6 @@ To view the help document please click on the link below!
 
 ## Test Case
 
-**To view Test Case 1 please click here**
+**[To view Test Case 1 please click here](./docs/Test%20Case%201.png)**
 
-**To view Test Case 2 please click here**
+**[To view Test Case 2 please click here](./docs/Test%20Case%202.png)**
