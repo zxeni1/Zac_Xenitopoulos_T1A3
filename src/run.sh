@@ -13,16 +13,13 @@ if command -v python3 &>/dev/null; then
     else
         echo "Updating Python 3..."
         # Update Python 3
-        # Note: The specific command may vary based on the package manager used on your system (e.g., apt, yum, brew).
-        # The following is an example for systems using apt.
         sudo apt-get update
         sudo apt-get install --only-upgrade python3
     fi
 else
     # Prompt user to install python3
     echo "Python 3 is not installed. Please install Python 3 before proceeding."
-    # You can provide instructions or links to install Python 3 based on the user's operating system.
-    # For example, on Ubuntu:
+    
     echo "On Ubuntu, you can install Python 3 using: sudo apt-get install python3"
     exit 1
 fi

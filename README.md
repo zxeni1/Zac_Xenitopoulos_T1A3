@@ -16,6 +16,8 @@ A large variety of different tutorials were also used in the progess of developi
 ## Q2 Provide a link to your source control repository
 ### My Github Repo: [Click Here!!](https://github.com/zxeni1/Zac_Xenitopoulos_T1A3)
 
+### My Presentation Video: [Click Here!!](https://youtu.be/0qlgK-2skJk)
+
 ## Q3 Identify any code style guide or styling conventions that the application will adhere to.
 
 The code adheres to Python's PEP 8 style guide. The code complies with the following elements of the style guide
